@@ -1,21 +1,9 @@
 #!/bin/bash
 
-BROWSER="echo"
-#BROWSER="google-chrome"
-#BROWSER="forefox"
-
 if [ "$1" == "" ]; then
 	1>&2 echo "Specify first reporting month as argument (e.g., 2022-08)"
 	exit 1
 fi
-
-if [ "$2" == "" ]; then
-	SYN="0"
-	1>&2 echo "Showing for synchronizer ${SYN}. Give a second argument as synchronizer no. to select another."
-else
-	SYN=$2
-fi
-
 
 for count in {0..5}; do
 
@@ -28,8 +16,8 @@ for count in {0..5}; do
 	fi
 
 	TILL=`date +%s -d "$1-01 + $countPlus months"`
-
-	${BROWSER} "https://nagios.cesnet.cz/pnp4nagios/index.php/zoom?host=fe1.dhr.cesnet.cz&srv=Product_Latency&view=3&source=${SYN}&end=${TILL}&start=${FROM}&graph_width=1024&graph_height=768"
+	
+	firefox "https://nagios.cesnet.cz/cgi-bin/icinga2-classicui/avail.cgi?t1=${FROM}&t2=${TILL}&show_log_entries=&host=fe1.dhr.cesnet.cz&service=Product+Source+Latency&assumeinitialstates=yes&assumestateretention=yes&assumestatesduringnotrunning=yes&includesoftstates=no&initialassumedhoststate=0&initialassumedservicestate=6&timeperiod=[+Current+time+range+]&backtrack=8"
 
 done
 
