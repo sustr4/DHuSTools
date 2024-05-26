@@ -13,7 +13,7 @@ echo 'Date;Source;Duraion-in-ms'
 
 # Search for query duration records and replace synchronizer numbers
 # with source dnames
-for l in *.log.gz; do gunzip -c $l; done | grep -h 'query(Products)' | sed 's/.*\]\[\([0-9][0-9\-]*\).*Synchronizer\#\([0-9][0-9]*\).*done in \([0-9]*\)ms.*/\1;\2;\3/' | sed -f /tmp/syncer.replace.$$ > response-times.$$.csv
+for l in *.log.gz; do gunzip -c $l; done | grep -h "Query='Products'" | sed 's/.*\]\[\([0-9][0-9\-]*\).*Synchronizer\#\([0-9][0-9]*\).*done in \([0-9]*\)ms.*/\1;\2;\3/' | sed -f /tmp/syncer.replace.$$ > response-times.$$.csv
 
 rm -f /tmp/syncer.replace.$$
 
